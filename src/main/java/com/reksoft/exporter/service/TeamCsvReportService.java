@@ -17,24 +17,24 @@ public class TeamCsvReportService {
     @Autowired
     private TeamService teamService;
 
-//    public File generateReport(String filePath) throws IOException {
-//        List<Team> teams = teamService.getTeams();
-//
-//        File file = new File(filePath);
-//        try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
-//            String[] header = {"ID", "Team Name", "Players"};
-//            writer.writeNext(header);
-//
-//            for (Team team : teams) {
-//                String[] line = {
-//                        String.valueOf(team.getId()),
-//                        team.getName(),
-//                        team.getPlayers()
-//                };
-//                writer.writeNext(line);
-//            }
-//        }
-//
-//        return file;
-//    }
+    public File generateReport(String filePath) throws IOException {
+        List<Team> teams = teamService.getTeams();
+
+        File file = new File(filePath);
+        try (CSVWriter writer = new CSVWriter(new FileWriter(file))) {
+            String[] header = {"ID", "Team Name", "Players"};
+            writer.writeNext(header);
+
+            for (Team team : teams) {
+                String[] line = {
+                        String.valueOf(team.getId()),
+                        team.getName(),
+                        team.getPlayersString()
+                };
+                writer.writeNext(line);
+            }
+        }
+
+        return file;
+    }
 }

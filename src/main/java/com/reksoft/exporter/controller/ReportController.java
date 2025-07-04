@@ -1,6 +1,7 @@
 package com.reksoft.exporter.controller;
 
 import com.reksoft.exporter.service.PlayerCsvReportService;
+import com.reksoft.exporter.service.TeamCsvReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -25,7 +26,9 @@ import java.time.format.DateTimeFormatter;
 public class ReportController {
 
     @Autowired
-    private PlayerCsvReportService reportService;
+    private PlayerCsvReportService playerCsvReportService;
+    @Autowired
+    private TeamCsvReportService teamCsvReportService;
     @Autowired
     private Clock clock;
 
@@ -38,7 +41,7 @@ public class ReportController {
     public ResponseEntity<Resource> downloadPlayerReport() throws IOException {
         String timestamp = LocalDateTime.now(clock).format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
         String filename = "player_report_%s.csv".formatted(timestamp);
-        File reportFile = reportService.generateReport(System.getProperty("java.io.tmpdir") + File.separator + filename);
+        File reportFile = playerCsvReportService.generateReport(System.getProperty("java.io.tmpdir") + File.separator + filename);
 
         FileSystemResource resource = new FileSystemResource(reportFile);
 
@@ -49,8 +52,19 @@ public class ReportController {
                 .body(resource);
     }
 
+    // TODO в списке имен возвращается null null
     @GetMapping("/team/download")
-    public ResponseEntity<Resource> downloadTeamReport() {
-        throw new RuntimeException("Отчёт по командам пока не реализован");
+    public ResponseEntity<Resource> downloadTeamReport() throws IOException {
+        String timestamp = LocalDateTime.now(clock).format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String filename = "team_report_%s.csv".formatted(timestamp);
+        File reportFile = teamCsvReportService.generateReport(System.getProperty("java.io.tmpdir") + File.separator + filename);
+
+        FileSystemResource resource = new FileSystemResource(reportFile);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentLength(Files.size(reportFile.toPath()))
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(resource);
     }
 }
