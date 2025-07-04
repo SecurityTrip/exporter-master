@@ -52,7 +52,6 @@ public class ReportController {
                 .body(resource);
     }
 
-    // TODO в списке имен возвращается null null
     @GetMapping("/team/download")
     public ResponseEntity<Resource> downloadTeamReport() throws IOException {
         String timestamp = LocalDateTime.now(clock).format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));

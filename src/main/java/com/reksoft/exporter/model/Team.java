@@ -1,7 +1,6 @@
 package com.reksoft.exporter.model;
 
-import com.reksoft.exporter.repository.dto.PlayerDto;
-
+import com.reksoft.exporter.repository.dto.PlayerViewDto;
 import lombok.Data;
 
 import java.util.List;
@@ -11,11 +10,11 @@ import java.util.stream.Collectors;
 public class Team {
     private Integer id;
     private String name;
-    private List<PlayerDto> players;
+    private List<PlayerViewDto> players;
 
     public String getPlayersString() {
         return players.stream()
-                .map(player -> player.getName() + " " + player.getSurname())
+                .map(PlayerViewDto::getCombinedName)
                 .collect(Collectors.joining(", "));
     }
 }
