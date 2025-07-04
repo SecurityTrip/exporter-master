@@ -3,6 +3,7 @@ package com.reksoft.exporter.service;
 import com.opencsv.CSVWriter;
 import com.reksoft.exporter.model.Player;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -15,7 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlayerCsvReportService {
 
-    private final PlayerService playerService;
+    @Autowired
+    private PlayerService playerService;
 
     private String combineName(String fullName, String nickname) {
         String[] parts = fullName.split("(?=\\p{Lu})");  // Разделение по любой заглавной букве (Unicode)

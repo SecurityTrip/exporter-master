@@ -3,6 +3,7 @@ package com.reksoft.exporter.repository;
 import com.reksoft.exporter.properties.ApiProperties;
 import com.reksoft.exporter.repository.dto.PlayerViewDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -17,8 +18,10 @@ import static org.springframework.http.HttpMethod.GET;
 @RequiredArgsConstructor
 public class PlayerApiRepository implements PlayerRepository {
 
-    private final RestTemplate restTemplate;
-    private final ApiProperties apiProperties;
+    @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    private ApiProperties apiProperties;
 
     public List<PlayerViewDto> getPlayers() {
         ResponseEntity<List<PlayerViewDto>> response = restTemplate.exchange(

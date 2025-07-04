@@ -5,16 +5,17 @@ import com.reksoft.exporter.repository.PlayerApiRepository;
 import com.reksoft.exporter.repository.dto.PlayerViewDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PlayerServiceImpl implements PlayerService {
 
-    private final PlayerApiRepository playerApiRepository;
+    @Autowired
+    private PlayerApiRepository playerApiRepository;
 
     @Override
     public List<Player> getPlayers() {

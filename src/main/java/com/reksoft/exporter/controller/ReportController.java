@@ -2,6 +2,7 @@ package com.reksoft.exporter.controller;
 
 import com.reksoft.exporter.service.PlayerCsvReportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +24,10 @@ import java.time.format.DateTimeFormatter;
 @RequiredArgsConstructor
 public class ReportController {
 
-    private final PlayerCsvReportService reportService;
-    private final Clock clock;
+    @Autowired
+    private PlayerCsvReportService reportService;
+    @Autowired
+    private Clock clock;
 
     @GetMapping
     public String getReportPage() {
