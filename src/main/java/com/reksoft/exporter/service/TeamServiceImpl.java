@@ -14,17 +14,12 @@ public class TeamServiceImpl implements TeamService{
     @Autowired
     private TeamApiRepository teamApiRepository;
 
+    @Autowired
+    private TeamMapper teamMapper;
+
     @Override
     public List<Team> getTeams() {
         List<TeamDto> teamDtos = teamApiRepository.getTeams();
-        return teamDtos.stream().map(this::map).toList();
-    }
-
-    private Team map(TeamDto teamDto){
-        Team team = new Team();
-        team.setId(teamDto.getId());
-        team.setName(teamDto.getName());
-        team.setPlayers(teamDto.getPlayers());
-        return team;
+        return teamDtos.stream().map(teamMapper::map).toList();
     }
 }
