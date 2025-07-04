@@ -27,7 +27,7 @@ public class PlayerServiceImpl implements PlayerService {
         Player player = new Player();
         player.setId(playerViewDto.getId());
         player.setCountry(playerViewDto.getCountry());
-        player.setNickname(playerViewDto.getCombinedName());
+        player.setNickname(playerViewDto.getNickName());
         player.setFullName(playerViewDto.getCombinedName());
         player.setTeamName(playerViewDto.getTeamName());
         return player;
